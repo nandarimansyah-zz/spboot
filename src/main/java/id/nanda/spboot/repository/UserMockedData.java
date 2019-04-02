@@ -34,7 +34,31 @@ public class UserMockedData {
                 .orElse(null);
     }
 
-    public boolean addUser(int id, String name, String phoneNumber) {
-        return users.add(new User(id, name, phoneNumber));
+    public User addUser(int id, String name, String phoneNumber) {
+        User newUser = new User(id, name, phoneNumber);
+        users.add(newUser);
+        return newUser;
+    }
+
+    public User updateUser(int id, String name, String phoneNumber) {
+        User user = getUserById(id);
+        if (user != null) {
+            int userIndex = users.indexOf(user);
+
+            user.setName(name);
+            user.setPhoneNumber(phoneNumber);
+
+            users.set(userIndex, user);
+            return user;
+        }
+        return null;
+    }
+
+    public boolean delete(int id){
+        User user = getUserById(id);
+        if (user != null) {
+            return users.remove(user);
+        }
+        return false;
     }
 }
