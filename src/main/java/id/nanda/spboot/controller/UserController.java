@@ -8,28 +8,24 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping(path = "/user")
 public class UserController {
 
     UserMockedData userMockedData = UserMockedData.getInstance();
 
-    @RequestMapping("/")
-    public String index() {
-        return "Congratulations from UserController.java";
-    }
-
-    @GetMapping("/user")
+    @GetMapping()
     public List<User> fetchAll() {
         return userMockedData.fetchUsers();
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public User getUser(@PathVariable String id) {
         int userId = Integer.parseInt(id);
         User user = userMockedData.getUserById(userId);
         return user;
     }
 
-    @PostMapping("/user")
+    @PostMapping()
     public User createUser(@RequestBody Map<String, String> body) {
         int id = Integer.parseInt(body.get("id"));
         String name = body.get("name");
@@ -37,7 +33,7 @@ public class UserController {
         return userMockedData.addUser(id, name, phoneNumber);
     }
 
-    @PutMapping("/user/{id}")
+    @PutMapping("/{id}")
     public User updateUser(@PathVariable String id, @RequestBody Map<String, String> body) {
         int userId = Integer.parseInt(id);
         String name = body.get("name");
@@ -45,7 +41,7 @@ public class UserController {
         return userMockedData.updateUser(userId, name, phoneNumber);
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/{id}")
     public boolean delete(@PathVariable String id) {
         int userId = Integer.parseInt(id);
         return userMockedData.delete(userId);
